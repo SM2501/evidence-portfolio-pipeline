@@ -1,0 +1,38 @@
+# ============================================================
+# Evidence Portfolio Pipeline — central configuration
+# Secrets are NOT stored here. Anything written as ${VAR_NAME}
+# is resolved from the environment / .env at load time
+# (see src/llm_client.py:load_config).
+# ============================================================
+
+neo4j:
+  uri: "${NEO4J_URI}"            # e.g. bolt://localhost:7687 or neo4j+s://xxxx.databases.neo4j.io
+  user: "${NEO4J_USER}"          # e.g. neo4j
+  password: "${NEO4J_PASSWORD}"
+  database: "neo4j"
+
+runpod:
+  base_url: "${RUNPOD_BASE_URL}" # e.g. https://<pod-id>-8000.proxy.runpod.net/v1
+  api_key: "${RUNPOD_API_KEY}"   # vLLM --api-key value (any string you set at launch)
+  model: "${RUNPOD_MODEL}"       # must match the model name vLLM serves
+
+batching:
+  articles_per_batch: 8          # docs per batch between checkpoint writes (spec: 5-10)
+  tokens_per_request: 4096       # max completion tokens per LLM call
+  max_concurrent_requests: 1     # keep 1 unless your pod has headroom
+
+context_window:
+  max_tokens_per_chunk: 8000     # input chunk budget for long docs / PDFs
+  chunk_overlap_tokens: 400      # overlap between consecutive chunks
+
+paths:
+  intermediate_articles: "outputs/articles_normalized.json"
+  extracted_records: "outputs/extracted.jsonl"
+  ledger: "outputs/processed_ledger.json"
+  verified_records: "outputs/verified.json"
+  audit_log: "outputs/audit_log.jsonl"
+  report: "outputs/policy_report.md"
+
+logging:
+  level: "INFO"
+  file: "outputs/pipeline.log"

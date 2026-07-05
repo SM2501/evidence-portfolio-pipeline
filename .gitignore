@@ -1,0 +1,21 @@
+# secrets
+.env
+
+# data & artifacts (host large datasets outside the repo)
+data/
+outputs/
+*.jsonl
+*.log
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+!data/.gitkeep
+!outputs/.gitkeep
