@@ -1,3 +1,19 @@
+## UPDATE: Pipeline V2 Architecture Audit & Redesign (WIP)
+**Date:** July 2026
+
+The attached `.zip` archive contains a comprehensive architectural audit and module redesign of the original evidence extraction pipeline, generated via Claude Fable 5. 
+
+While the original scripts functioned as a sequential, proof-of-concept ETL, this redesign transitions the architecture to an enterprise-grade, high-throughput pipeline built for a local vLLM endpoint (H100/Llama 4 Scout). 
+
+**Key Upgrades in this Archive:**
+*   **Asynchronous Processing:** Transitioned from a single-threaded loop to an `asyncio` producer/consumer model.
+*   **Adaptive Rate Controlling:** Implementation of an AIMD (Additive-Increase/Multiplicative-Decrease) concurrency gate to prevent vLLM queue meltdown under heavy load.
+*   **Cryptographic Trust Layer:** Upgraded the human-in-the-loop verification step to use an HMAC-signed, hash-chained audit log, ensuring absolute immutability of reviewer decisions.
+*   **Injection-Safe Graph Loading:** Transitioned Neo4j ingestion to use dynamic, byte-aware batching and fully parameterized `UNWIND` queries to prevent Cypher injection.
+*   **Chunk-Level Checkpointing:** Replaced the JSON ledger with a WAL-mode SQLite database for precise, crash-safe resumability.
+
+**Note on Status:** This is a Work-In-Progress (WIP). The archive contains the fully tested standalone modules (cleaning, JSON repair, rate controlling, Neo4j loading, etc.) and the deep architectural audit. The final monolithic integration scripts (the "glue" binding these modules together) are pending final generation.
+
 # Evidence Portfolio Pipeline
 
 Machine-assisted evidence extraction from ~18,000 Media Cloud news articles
