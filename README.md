@@ -1,20 +1,14 @@
-## UPDATE: Pipeline V2 Architecture Audit & Redesign (WIP)
-**Date:** July 2026
+Evidence Portfolio Pipeline — v2
 
-The attached `.zip` archive contains a comprehensive architectural audit and module redesign of the original evidence extraction pipeline, generated via Claude Fable 5. 
+A computational journalism and policy research pipeline that extracts structured, auditable evidence from news articles and PDFs using a locally hosted LLM (Llama 4 Scout via vLLM). The system classifies documents into a strict 12‑tag framework, stores provisional relationships in Neo4j, and enforces a cryptographically signed human‑in‑the‑loop verification layer before any machine‑generated claim becomes citable.
 
-While the original scripts functioned as a sequential, proof-of-concept ETL, this redesign transitions the architecture to an enterprise-grade, high-throughput pipeline built for a local vLLM endpoint (H100/Llama 4 Scout). 
+This upload contains the fully integrated v2 release (evidence-portfolio-pipeline-v2.zip), the recommended download. It bundles 18 modules — including chunking, JSON repair, OCR fallback, adaptive rate‑control, parameterized Neo4j loading, hash‑chained audit signing, and SQLite/WAL checkpointing — all validated by an 18‑check test suite that includes a genuine end‑to‑end mock‑client run over a 3‑document corpus.
 
-**Key Upgrades in this Archive:**
-*   **Asynchronous Processing:** Transitioned from a single-threaded loop to an `asyncio` producer/consumer model.
-*   **Adaptive Rate Controlling:** Implementation of an AIMD (Additive-Increase/Multiplicative-Decrease) concurrency gate to prevent vLLM queue meltdown under heavy load.
-*   **Cryptographic Trust Layer:** Upgraded the human-in-the-loop verification step to use an HMAC-signed, hash-chained audit log, ensuring absolute immutability of reviewer decisions.
-*   **Injection-Safe Graph Loading:** Transitioned Neo4j ingestion to use dynamic, byte-aware batching and fully parameterized `UNWIND` queries to prevent Cypher injection.
-*   **Chunk-Level Checkpointing:** Replaced the JSON ledger with a WAL-mode SQLite database for precise, crash-safe resumability.
+The pipeline is resumable, concurrency‑safe, and ready for a pilot calibration run before processing the full 18,000‑article target corpus. Setup instructions, architecture notes, bias‑measurement commitments, and ethical‑use disclosures are included in the README inside the zip.
 
-**Note on Status:** This is a Work-In-Progress (WIP). The archive contains the fully tested standalone modules (cleaning, JSON repair, rate controlling, Neo4j loading, etc.) and the deep architectural audit. The final monolithic integration scripts (the "glue" binding these modules together) are pending final generation.
+Earlier files (v1 archive, framework documents, the HHS public comment) are preserved for reference; for actual deployment, use the v2 zip.
 
-# Evidence Portfolio Pipeline
+# Evidence Portfolio Pipeline v1
 
 Machine-assisted evidence extraction from ~18,000 Media Cloud news articles
 (plus research-paper PDFs) into a Neo4j knowledge graph and a human-verified
