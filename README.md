@@ -6,4 +6,4 @@ This upload contains the fully integrated v2 release (evidence-portfolio-pipelin
 
 The pipeline is resumable, concurrency‑safe, and ready for a pilot calibration run before processing the full 18,000‑article target corpus. Setup instructions, architecture notes, bias‑measurement commitments, and ethical‑use disclosures are included in the README inside the zip.
 
-Earlier files (v1 archive, framework documents, the HHS public comment) are preserved for reference; for actual deployment, use the v2 zip.
+Earlier files (v1 archive, framework documents) are preserved for reference; for actual deployment, use the v2 zip.
